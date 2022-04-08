@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "",
+  "onReachBottomDistance": 150,
+  "usingComponents": {
+    "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
+    "u-loading-icon": "/uni_modules/uview-ui/components/u-loading-icon/u-loading-icon",
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "muzi-card": "/components/MuziCard"
+  }
+}

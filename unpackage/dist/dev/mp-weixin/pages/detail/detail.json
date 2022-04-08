@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "药品详情",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "u-swiper": "/uni_modules/uview-ui/components/u-swiper/u-swiper",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
+    "u-avatar": "/uni_modules/uview-ui/components/u-avatar/u-avatar",
+    "u-rate": "/uni_modules/uview-ui/components/u-rate/u-rate"
+  }
+}

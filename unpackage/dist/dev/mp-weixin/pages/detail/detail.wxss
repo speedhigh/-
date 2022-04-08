@@ -1,0 +1,22 @@
+
+.cart-btn.data-v-3e159eb4 {
+	width: 215rpx; 
+	height: 80rpx;
+	background: linear-gradient(to right, rgba(254,204,29,1), rgba(255,141,24,1))
+}
+.cart-btn-disabled.data-v-3e159eb4 {
+	width: 215rpx;
+	height: 80rpx;
+	background: linear-gradient(to right, rgba(254,204,29,0.5), rgba(255,141,24,0.5))
+}
+.buy-btn.data-v-3e159eb4 {
+	width: 215rpx; 
+	height: 80rpx; 
+	background: linear-gradient(to right, rgba(255,93,50,1), rgba(240,15,35,1))
+}
+.buy-btn-disabled.data-v-3e159eb4 {
+	width: 215rpx;
+	height: 80rpx; 
+	background: linear-gradient(to right, rgba(255,93,50,0.5), rgba(240,15,35,0.5))
+}
+

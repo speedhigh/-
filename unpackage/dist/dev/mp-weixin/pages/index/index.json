@@ -1,0 +1,19 @@
+{
+  "navigationBarTitleText": "木子网药品商城",
+  "navigationBarBackgroundColor": "#F13130",
+  "navigationBarTextStyle": "white",
+  "onReachBottomDistance": 150,
+  "usingComponents": {
+    "index-base-pagination-default": "/pages/index/index-base-pagination-default",
+    "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
+    "u--image": "/uni_modules/uview-ui/components/u--image/u--image",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
+    "u-swiper": "/uni_modules/uview-ui/components/u-swiper/u-swiper",
+    "u-grid": "/uni_modules/uview-ui/components/u-grid/u-grid",
+    "u-grid-item": "/uni_modules/uview-ui/components/u-grid-item/u-grid-item",
+    "base-count-down": "/components/BaseCountDown",
+    "base-tabs": "/components/BaseTabs",
+    "base-pagination": "/components/BasePagination",
+    "muzi-card": "/components/MuziCard"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "药品分类",
+  "onReachBottomDistance": 150,
+  "usingComponents": {
+    "type-base-pagination-default": "/pages/type/type-base-pagination-default",
+    "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
+    "u--image": "/uni_modules/uview-ui/components/u--image/u--image",
+    "u-icon": "/uni_modules/uview-ui/components/u-icon/u-icon",
+    "base-pagination": "/components/BasePagination"
+  }
+}

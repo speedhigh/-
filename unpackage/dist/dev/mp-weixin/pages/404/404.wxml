@@ -1,0 +1,1 @@
+<view class="flex items-center justify-center" style="height:70vh;"><u-empty vue-id="3beb8d0e-1" mode="page" icon="http://cdn.uviewui.com/uview/empty/page.png" width="480rpx" height="480rpx" textSize="32rpx" bind:__l="__l"></u-empty></view>

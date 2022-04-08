@@ -1,0 +1,65 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/404/404",
+    "pages/type/type",
+    "pages/cart/cart",
+    "pages/user/user",
+    "pages/search/search",
+    "pages/search/list",
+    "pages/detail/detail",
+    "pages/login/login"
+  ],
+  "subPackages": [
+    {
+      "root": "subpages",
+      "pages": [
+        "confirmorder/confirmorder",
+        "info/info"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "木子网",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "enablePullDownRefresh": false,
+    "backgroundColor": "#F8F8F8",
+    "rpxCalcMaxDeviceWidth": 9999,
+    "rpxCalcBaseDeviceWidth": 750,
+    "rpxCalcIncludeWidth": 750
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#F23030",
+    "borderStyle": "black",
+    "backgroundColor": "#FFFFFF",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/tabbar/home.png",
+        "selectedIconPath": "static/images/tabbar/home_s.png"
+      },
+      {
+        "text": "分类",
+        "pagePath": "pages/type/type",
+        "iconPath": "static/images/tabbar/type.png",
+        "selectedIconPath": "static/images/tabbar/type_s.png"
+      },
+      {
+        "text": "购物车",
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/images/tabbar/cart.png",
+        "selectedIconPath": "static/images/tabbar/cart_s.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/user/user",
+        "iconPath": "static/images/tabbar/user.png",
+        "selectedIconPath": "static/images/tabbar/user_s.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

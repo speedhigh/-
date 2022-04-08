@@ -1,0 +1,66 @@
+{
+    "setting": {},
+    "condition": {
+        "plugin": {
+            "list": []
+        },
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "home",
+                    "pathName": "pages/index/index",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/search/search",
+                    "pathName": "pages/search/search",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "type",
+                    "pathName": "pages/type/type",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "searchList",
+                    "pathName": "pages/search/list",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/detail/detail",
+                    "pathName": "pages/detail/detail",
+                    "query": "id=508",
+                    "scene": null
+                },
+                {
+                    "name": "login",
+                    "pathName": "pages/login/login",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "cart",
+                    "pathName": "pages/cart/cart",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "完善信息",
+                    "pathName": "subpages/info/info",
+                    "query": "",
+                    "scene": null
+                }
+            ]
+        }
+    }
+}

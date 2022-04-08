@@ -1,0 +1,114 @@
+{
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "木子网",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"enablePullDownRefresh": false,
+		"backgroundColor": "#F8F8F8",
+		"rpxCalcMaxDeviceWidth": 9999,
+		"rpxCalcBaseDeviceWidth": 750,
+		"rpxCalcIncludeWidth": 750
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#F23030",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"list": [{
+			"text": "首页",
+			"pagePath": "pages/index/index",
+			"iconPath": "static/images/tabbar/home.png",
+			"selectedIconPath": "static/images/tabbar/home_s.png"
+		}, {
+			"text": "分类",
+			"pagePath": "pages/type/type",
+			"iconPath": "static/images/tabbar/type.png",
+			"selectedIconPath": "static/images/tabbar/type_s.png"
+		}, {
+			"text": "购物车",
+			"pagePath": "pages/cart/cart",
+			"iconPath": "static/images/tabbar/cart.png",
+			"selectedIconPath": "static/images/tabbar/cart_s.png"
+		}, {
+			"text": "我的",
+			"pagePath": "pages/user/user",
+			"iconPath": "static/images/tabbar/user.png",
+			"selectedIconPath": "static/images/tabbar/user_s.png"
+		}]
+	},
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "木子网药品商城",
+				"navigationBarBackgroundColor": "#F13130",
+				"navigationBarTextStyle": "white",
+				"onReachBottomDistance": 150
+			}
+		}, {
+			"path": "pages/404/404",
+			"style": {
+				"navigationBarTitleText": "页面未找到"
+			}
+		}, {
+			"path": "pages/type/type",
+			"style": {
+				"navigationBarTitleText": "药品分类",
+				"onReachBottomDistance": 150
+			}
+		}, {
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		}, {
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "我的"
+
+			}
+		}, {
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		}, {
+			"path": "pages/search/list",
+			"style": {
+				"navigationBarTitleText": "",
+				"onReachBottomDistance": 150
+			}
+		}, {
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": "药品详情",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}
+	],
+	"subPackages": [{
+		"root": "subpages",
+		"pages": [{
+			"path": "confirmorder/confirmorder",
+			"style": {
+				"navigationBarTitleText": "确认订单",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "info/info",
+			"style": {
+				"navigationBarTitleText": "完善信息",
+				"enablePullDownRefresh": false
+			}
+		}]
+	}]
+}

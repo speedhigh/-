@@ -1,0 +1,20 @@
+
+.border-red-full.data-v-0f00adf4 {
+	border: 1px solid #CCCCCC
+}
+.buy-btn.data-v-0f00adf4 {
+	min-width: 200rpx; margin-left: 16rpx; background: linear-gradient(to right, #ff5d32, #f00f23)
+}
+.buy-btn[disabled].data-v-0f00adf4 {
+	min-width: 200rpx; margin-left: 16rpx; background: linear-gradient(to right, #FFC3B3, #F7828C); color: #FFFFFF;
+}
+.collection-btn[disabled].data-v-0f00adf4 {
+	color: #CCCCCC; border: 1px solid #CCCCCC
+}
+.delete-btn.data-v-0f00adf4 {
+	margin-left: 20rpx
+}
+.delete-btn[disabled].data-v-0f00adf4 {
+	margin-left: 20rpx; background-color: #FCA5A5; color: #FFFFFF;
+}
+
