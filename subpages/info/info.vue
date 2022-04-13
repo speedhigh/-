@@ -1,55 +1,58 @@
 <template>
-	<view style="padding: 32rpx">
-		<u--form :model="form" :rules="rules" ref="formRef">
-			<u-form-item label="真实姓名" prop="realname" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.realname" border="none" clearable placeholder="请填写真实姓名" />
-			</u-form-item>
-			<u-form-item label="身份证号" prop="realcardno" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.realcardno" maxlength="18" border="none" clearable placeholder="请填写身份证号" />
-			</u-form-item>
-			<u-form-item label="手机号" prop="realmobile" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.realmobile" maxlength="11" type="number" border="none" clearable placeholder="请填写手机号" />
-			</u-form-item>
-			<!--  收货地址-->
-			<view class="flex items-center" style="margin-top: 60rpx; margin-bottom: 20rpx">
-				<view class="bg-red-400 rounded-full" style="width: 6rpx; height: 32rpx" />
-				<view class="text-base font-bold" style="margin-left: 13rpx">收货地址</view>
-			</view>
-			
-			<u-form-item label="收货人" prop="slinkman" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.slinkman" border="none" clearable placeholder="请填写收货人姓名" />
-			</u-form-item>
-			<u-form-item label="手机号码" prop="addressmobile" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.addressmobile" maxlength="11" type="number" border="none" clearable placeholder="请填写收货人手机号" />
-			</u-form-item>
-			<u-form-item label="身份证号" prop="addresscardno" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.addresscardno" maxlength="18" border="none" clearable placeholder="请填写收货人身份证号" />
-			</u-form-item>
-			<u-form-item label="所在地区" prop="addressArea" labelWidth="170rpx" borderBottom @click="areaShow">
-				<u--input v-model="form.addressArea" disabled disabledColor="#ffffff" placeholder="请选择所在地区" border="none" />
-				<u-icon slot="right" name="arrow-right" />
-			</u-form-item>
-			<u-form-item label="详细地址" prop="addressdetail" labelWidth="170rpx" borderBottom>
-				<u--input v-model="form.addressdetail" border="none" clearable placeholder="请填写收货人详细地址" />
-			</u-form-item>
-		</u--form>
-		<u-picker 
-			:show="area.show" 
-			ref="pickerRef" 
-			:columns="area.province" 
-			keyName="label" 
-			@change="changeHandler"
-			@confirm="confirm"
-			@cancel="area.show = false"
-		/>
-		<view style="margin-top: 120rpx">
-			<u-button
-				shape="circle" 
-				text="提交" 
-				:disabled="submitDisabled"
-				color="linear-gradient(45deg, #BA4446 0%, #A42D35 0%, #A73434 0%, #C0272E 0%, #C72D2B 0%, #D6242D 0%, #E5222C 0%, #E11629 0%, #E5222C 0%, #E61A16 0%, #F0300C 100%)"
-				@click="submit"
+	<view class="text-gray-800">
+		<u-loading-page :loading="showLoading" loadingText="正在加载..." />
+		<view v-show="!showLoading" class="p-4">
+			<u--form :model="form" :rules="rules" ref="formRef">
+				<u-form-item label="真实姓名" prop="realname" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.realname" border="none" clearable placeholder="请填写真实姓名" />
+				</u-form-item>
+				<u-form-item label="身份证号" prop="realcardno" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.realcardno" maxlength="18" border="none" clearable placeholder="请填写身份证号" />
+				</u-form-item>
+				<u-form-item label="手机号" prop="realmobile" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.realmobile" maxlength="11" type="number" border="none" clearable placeholder="请填写手机号" />
+				</u-form-item>
+				<!--  收货地址-->
+				<view class="flex items-center" style="margin-top: 60rpx; margin-bottom: 20rpx">
+					<view class="bg-red-400 rounded-full" style="width: 6rpx; height: 32rpx" />
+					<view class="text-base font-bold" style="margin-left: 13rpx">收货地址</view>
+				</view>
+				
+				<u-form-item label="收货人" prop="slinkman" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.slinkman" border="none" clearable placeholder="请填写收货人姓名" />
+				</u-form-item>
+				<u-form-item label="手机号码" prop="addressmobile" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.addressmobile" maxlength="11" type="number" border="none" clearable placeholder="请填写收货人手机号" />
+				</u-form-item>
+				<u-form-item label="身份证号" prop="addresscardno" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.addresscardno" maxlength="18" border="none" clearable placeholder="请填写收货人身份证号" />
+				</u-form-item>
+				<u-form-item label="所在地区" prop="addressArea" labelWidth="170rpx" borderBottom @click="areaShow">
+					<u--input v-model="form.addressArea" disabled disabledColor="#ffffff" placeholder="请选择所在地区" border="none" />
+					<u-icon slot="right" name="arrow-right" />
+				</u-form-item>
+				<u-form-item label="详细地址" prop="addressDetail" labelWidth="170rpx" borderBottom>
+					<u--input v-model="form.addressDetail" border="none" clearable placeholder="请填写收货人详细地址" />
+				</u-form-item>
+			</u--form>
+			<u-picker 
+				:show="area.show" 
+				ref="pickerRef" 
+				:columns="area.province" 
+				keyName="label" 
+				@change="changeHandler"
+				@confirm="confirm"
+				@cancel="area.show = false"
 			/>
+			<view style="margin-top: 120rpx">
+				<u-button
+					shape="circle" 
+					text="提交" 
+					:disabled="submitDisabled"
+					color="linear-gradient(45deg, #BA4446 0%, #A42D35 0%, #A73434 0%, #C0272E 0%, #C72D2B 0%, #D6242D 0%, #E5222C 0%, #E11629 0%, #E5222C 0%, #E61A16 0%, #F0300C 100%)"
+					@click="submit"
+				/>
+			</view>
 		</view>
 	</view>
 </template>
@@ -58,6 +61,7 @@
 	export default {
 		data() {
 			return {
+				showLoading: true,
 				area: {
 					show: false,
 					loading: false,
@@ -65,7 +69,6 @@
 					city: [],
 					addresscode: ''
 				},
-				aeraShow: true,
 				form: {
 					realname: '',
 					realcardno: '',
@@ -74,7 +77,7 @@
 					addressmobile: '',
 					addresscardno: '',
 					addressArea: '',
-					addressdetail: ''
+					addressDetail: ''
 				},
 				rules: {
 					realname: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
@@ -98,7 +101,7 @@
 					addressArea: [
 						{ required: true, message: '请选择所在地区', trigger: ['blur', 'change'] }
 					],
-					addressdetail: [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
+					addressDetail: [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
 				},
 				submitDisabled: false
 			}
@@ -122,6 +125,7 @@
 				res.data.data[0].children.forEach((item, index) => {
 					this.area.province[1].push({ label: item.label, value: item.value })
 				})
+				this.showLoading = false
 			},
 			areaShow() {
 				this.area.show = true
@@ -137,7 +141,7 @@
 				let p = this.area.province[0]
 				let c = this.area.province[0][e.indexs[0]].children
 				this.area.addresscode = c[e.indexs[1]].value
-				this.form.addressArea = p[e.indexs[0]].label + '/' + c[e.indexs[1]].label
+				this.form.addressArea = '中国 ' + p[e.indexs[0]].label + ' ' + c[e.indexs[1]].label
 				this.$refs.formRef.validateField('addressArea')
 				this.area.show = false
 			},
@@ -164,7 +168,7 @@
 						addressmobile: this.form.addressmobile,        // 收货人手机号
 						addresscardno: this.form.addresscardno,        // 收货人身份证号
 						addresscode: this.area.addresscode,            // 所在地区
-						addressdetail: this.form.addressdetail, 
+						addressDetail: this.form.addressDetail, 
 					},
 				})
 				if(res.data.code === 20000) {

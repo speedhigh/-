@@ -15,7 +15,10 @@
       "root": "subpages",
       "pages": [
         "confirmorder/confirmorder",
-        "info/info"
+        "info/info",
+        "coupon/coupon",
+        "address/address",
+        "address/edit"
       ]
     }
   ],

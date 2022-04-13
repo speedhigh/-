@@ -6,7 +6,7 @@
 		},
 		// 当 uni-app 启动，或从后台进入前台显示
 		onShow: function() {
-			console.log('App Show')
+			console.log('App Show-------------')
 		},
 		// 当 uni-app 从前台进入后台
 		onHide: function() {
@@ -41,8 +41,9 @@
 	.flex-col { flex-direction: column }
 	.flex-wrap { flex-wrap: wrap }
 	.items-center { align-items: center }
-	.ites-stretch { align-items: stretch; }
+	.items-stretch { align-items: stretch }
 	.justify-center { justify-content: center }
+	.justify-end { justify-content: flex-end }
 	.justify-between { justify-content: space-between }
 	.justify-around { justify-content: space-around }
 	.flex-shrink-0 { flex-shrink: 0 }
@@ -109,8 +110,11 @@
 	.rounded-full { border-radius: 9999rpx }
 	.rounded-l-full { border-bottom-left-radius: 9999rpx; border-top-left-radius: 9999rpx }
 	.rounded-r-full { border-bottom-right-radius: 9999rpx; border-top-right-radius: 9999rpx }
+	.shadow { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) }
 	.ml-auto { margin-left: auto }
 	.mx-auto { margin-left: auto; margin-right: auto }
+	.mt-3d5 { margin-top: 28rpx }
+	.p-4 { padding: 32rpx }
 	.line-1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all }
 	.line-2 { 
 		text-overflow: -o-ellipsis-lastline; 

@@ -2,6 +2,7 @@
   "navigationBarTitleText": "完善信息",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "u-loading-page": "/uni_modules/uview-ui/components/u-loading-page/u-loading-page",
     "u--form": "/uni_modules/uview-ui/components/u--form/u--form",
     "u-form-item": "/uni_modules/uview-ui/components/u-form-item/u-form-item",
     "u--input": "/uni_modules/uview-ui/components/u--input/u--input",

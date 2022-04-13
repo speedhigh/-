@@ -41,14 +41,13 @@
 			<view
 				v-for="(shop, index) in cartList"
 				:key="index"
-				class="bg-white rounded-2xl"
-				style="padding: 32rpx; margin-top: 28rpx"
+				class="bg-white rounded-2xl mt-3d5 p-4"
 			>
 				<!-- 店铺 -->
 				<view class="flex items-center">
 					<view
 						class="rounded-full flex items-center justify-center"
-						:class="shop.checkcountry ? 'bg-red-400' : 'bg-white border-red-full'"
+						:class="shop.checkcountry ? 'bg-red-400' : 'bg-white u-border'"
 						style="width: 34rpx; height: 34rpx"
 						@click="checkShop(index)"
 					>
@@ -58,11 +57,11 @@
 				</view>
 				
 				<view v-for="(card, cardIdx) in shop.productMain" :key="card.id" style="margin-top: 32rpx">
-					<view class="flex ites-stretch">
+					<view class="flex items-stretch">
 						<view class="flex-shrink-0 flex items-center">
 							<view
 								class="rounded-full flex items-center justify-center"
-								:class="card.check ? 'bg-red-400' : 'bg-white border-red-full'"
+								:class="card.check ? 'bg-red-400' : 'bg-white u-border'"
 								style="width: 34rpx; height: 34rpx"
 								@click="checkDrug(index, cardIdx)"
 							>
@@ -120,7 +119,7 @@
 			<view class="flex-shrink-0 flex items-center" @click="checkAll">
 				<view
 					class="rounded-full flex items-center justify-center"
-					:class="checked ? 'bg-red-400' : 'bg-white border-red-full'"
+					:class="checked ? 'bg-red-400' : 'bg-white u-border'"
 					style="width: 34rpx; height: 34rpx"
 				>
 					<u-icon v-show="checked" size="34rpx" labelSize="22rpx" name="checkbox-mark" color="#FFFFFF" />
@@ -252,8 +251,9 @@
 					data: { cartid: stepper.name, count:stepper.value }
 				})
 				setTimeout(() => {
-					uni.showToast({ title:'成功！', complete: () => {this.disabled.stepper = false}})
-				}, 300)
+					uni.hideLoading()
+					this.disabled.stepper = false
+				}, 50)
 			},
 			// 删除商品
 			deleteProduct() {
@@ -283,7 +283,7 @@
 					}})
 					return
 				}
-				uni.setStorageSync('orderList', this.choiceList)
+				uni.setStorageSync('orderList', this.choiceList.toString())
 				uni.navigateTo({ url: '/subpages/confirmorder/confirmorder?from=cart' })
 			}
 		}
@@ -291,9 +291,6 @@
 </script>
 
 <style scoped>
-	.border-red-full {
-		border: 1px solid #CCCCCC
-	}
 	.buy-btn {
 		min-width: 200rpx; margin-left: 16rpx; background: linear-gradient(to right, #ff5d32, #f00f23)
 	}

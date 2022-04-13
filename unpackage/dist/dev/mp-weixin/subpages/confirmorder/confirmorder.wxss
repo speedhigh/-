@@ -1,0 +1,8 @@
+
+.buy-btn.data-v-1331ebb2 {
+		min-width: 200rpx; margin-left: 16rpx; background: linear-gradient(to right, #ff5d32, #f00f23)
+}
+.buy-btn[disabled].data-v-1331ebb2 {
+		min-width: 200rpx; margin-left: 16rpx; background: linear-gradient(to right, #FFC3B3, #F7828C); color: #FFFFFF;
+}
+

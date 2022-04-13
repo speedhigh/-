@@ -1,7 +1,4 @@
 
-.border-red-full.data-v-0f00adf4 {
-	border: 1px solid #CCCCCC
-}
 .buy-btn.data-v-0f00adf4 {
 	min-width: 200rpx; margin-left: 16rpx; background: linear-gradient(to right, #ff5d32, #f00f23)
 }

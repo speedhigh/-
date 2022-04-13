@@ -32,21 +32,19 @@
 				scrollLeft: 0, // 横向滚动条位置
 			}
 		},
-		mounted() {
-			// this.getScrollW()
-		},
 		watch: {
 			list: {
 				handler(item,index) {
-					this.getScrollW()
+					if(item.length > 0) this.getScrollW()
 				},
-				deep: true // 深度监听父组件传过来对象变化
+				deep: true ,// 深度监听父组件传过来对象变化
+				immediate: true
 			}
 		},
 		methods: {
 			// 获取标题区域宽度，和每个子元素节点的宽度以及元素距离左边栏的距离
 			getScrollW() {
-				let query = uni.createSelectorQuery().in(this);
+				let query = uni.createSelectorQuery().in(this)
 				query.select('.scroll-view').boundingClientRect(data => {
 					this.contentScrollW = data.width	// 拿到 scroll-view 组件宽度
 				}).exec();

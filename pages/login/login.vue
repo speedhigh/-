@@ -1,23 +1,26 @@
 <template>
 	<view class="relative" style="padding: 112rpx 135rpx">
-		<view class="flex justify-center">
-			<u--image src="/static/images/login/logo.png" width="176rpx" height="326rpx" />
-		</view>
-		<view style="margin-top: 228rpx">
-			<u-button text="微信用户一键注册" color="#54C56F" shape="circle" size="large" open-type="getPhoneNumber"  @getphonenumber="getPhoneNumber"/>
-		</view>
-		<view class="flex items-center justify-center" style="margin-top: 40rpx">
-			<u-checkbox-group @change="checkChange">
-				<u-checkbox
-					shape="circle"
-					name="同意"
-					label="我已同意授权"
-					labelSize="24rpx"
-					iconSize="34rpx"
-					activeColor="#79A7CC"
-				/>
-				<text class="text-xs" style="color: #79A7CC">《木子网隐私协议》</text>
-			</u-checkbox-group>
+		<u-loading-page :loading="showLoading" loadingText="正在加载..." />
+		<view v-show="!showLoading">
+			<view class="flex justify-center">
+				<u--image src="/static/images/login/logo.png" width="176rpx" height="326rpx" />
+			</view>
+			<view style="margin-top: 228rpx">
+				<u-button text="微信用户一键注册" color="#54C56F" shape="circle" size="large" open-type="getPhoneNumber"  @getphonenumber="getPhoneNumber"/>
+			</view>
+			<view class="flex items-center justify-center" style="margin-top: 40rpx">
+				<u-checkbox-group @change="checkChange">
+					<u-checkbox
+						shape="circle"
+						name="同意"
+						label="我已同意授权"
+						labelSize="24rpx"
+						iconSize="34rpx"
+						activeColor="#79A7CC"
+					/>
+					<text class="text-xs" style="color: #79A7CC">《木子网隐私协议》</text>
+				</u-checkbox-group>
+			</view>
 		</view>
 	</view>
 </template>
@@ -26,17 +29,23 @@
 	export default {
 		data() {
 			return {
+				showLoading: true,
 				checked: false,
 				showDialog: false
 			}
 		},
 		onLoad() {
-			if(!uni.getStorageSync('openid')) this.getCode()
+			if(!uni.getStorageSync('openid')) {
+				this.getCode()
+			} else {
+				this.showLoading = false
+			}
 		},
 		methods: {
 			async getOpenId(code) {
 				const res = await this.$api({url: '/open/getOpenId', data: { js_code: code }})
 				uni.setStorageSync('openid', res.data.data.openid)
+				this.showLoading = false
 			},
 			getCode() {
 				uni.getProvider({
