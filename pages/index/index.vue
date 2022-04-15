@@ -9,8 +9,7 @@
 					<navigator url="/pages/search/search" class="flex-grow">
 						<u-search disabled :showAction="false" height="74rpx" placeholder="搜索药品名、品牌" bgColor="#FFFFFF" />
 					</navigator>
-					<navigator url="/pages/cart/cart" open-type="switchTab" class="flex-shrink-0"
-						style="margin-left: 10rpx; padding: 0 10rpx">
+					<navigator url="/pages/cart/cart" open-type="switchTab" class="flex-shrink-0" style="margin-left: 10rpx; padding: 0 10rpx">
 						<u--image src="/static/images/home/top-cart.png" width="50rpx" height="50rpx" />
 					</navigator>
 				</view>

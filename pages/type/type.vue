@@ -10,10 +10,11 @@
 			</view>
 			<!-- 药品分类 -->
 			<view class="flex" :style="scrollHeight">
-				<scroll-view scroll-y="true" class="bg-gray-100" style="width: 270rpx;">
-					<view 
+				<scroll-view scroll-y="true" class="bg-gray-100" style="width: 270rpx">
+					<view
 						v-for="(item, index) in navList" 
-						:key="i" class="text-center" 
+						:key="i"
+						class="text-center"
 						style="height: 90rpx"
 						:class="active === index ? 'bg-white font-bold' : 'bg-gray-100'"
 						@click="changeTabs(index)"
@@ -21,13 +22,13 @@
 						<text style="line-height: 90rpx">{{ item.sname }}</text>
 					</view>
 				</scroll-view>
-				<scroll-view scroll-y="true" lower-threshold="150" @scrolltolower="scrolltolower">
-					<base-pagination url="/open/home/search" :params="params" :currentPage="currentPage">
+				<scroll-view scroll-y="true" :scroll-top="scrollTop" lower-threshold="150" @scrolltolower="scrolltolower" @scroll="scrollChange">
+					<base-pagination ref="paginationRef" url="/open/home/search" :params="params" :currentPage="currentPage">
 						<template v-slot="{list}">
 							<view v-for="(item, index) in list" :key="index" style="height: 230rpx; padding: 0 22rpx 0 14rpx">
 								<navigator
 									:url="'/pages/detail/detail?id=' + item.id"
-									class="flex relative" 
+									class="flex relative"
 									style="padding: 36rpx 0 24rpx 0; border-bottom: 2rpx solid #EDF2F7"
 								>
 									<view class="flex-shrink-0" style="width: 168rpx; padding: 18rpx 14rpx 14rpx 24rpx">
@@ -60,6 +61,8 @@
 		data() {
 			return {
 				loadingNum: 0,
+				scrollTop: 0,
+				oldScrollTop: 0,
 				scrollHeight: "",
 				navList: [],
 				active: 0,
@@ -76,11 +79,14 @@
 			this.getNav()
 		},
 		onReachBottom() {
-			this.currentPage++
+			// this.$refs.paginationRef.addPage()
 		},
 		methods: {
 			scrolltolower() {
-				this.currentPage++
+				this.$refs.paginationRef.addPage()
+			},
+			scrollChange(e) {
+				this.oldScrollTop = e.detail.scrollTop
 			},
 			async getNav() {
 				const res = await this.$api({url: '/open/home/wxapp/get_nav_class'})
@@ -92,6 +98,8 @@
 				this.loadingNum += 1
 			},
 			changeTabs(index) {
+				this.scrollTop = this.oldScrollTop
+				this.$nextTick(() => this.scrollTop = 0)
 				this.active = index
 				this.currentPage = 1
 				let obj = { countryCode: '01', onefunctioncategory: this.navList[index].sfuncid }

@@ -430,7 +430,7 @@ button {
   background-color: #FCA5A5;
 }
 .bg-red-400 {
-  background-color: #F03E38;
+  background-color: #DF453D;
 }
 .bg-origin-400 {
   background-color: #E94D4C;

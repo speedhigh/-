@@ -25,14 +25,13 @@
 						class="rounded-full flex-shrink-0 flex items-center justify-center"
 						:class="item.id === chosenId ? 'bg-red-400' : 'bg-white u-border'"
 						style="width: 34rpx; height: 34rpx"
-						@click="checkShop(index)"
 					>
 						<u-icon v-show="item.id === chosenId" size="34rpx" labelSize="22rpx" name="checkbox-mark" color="#FFFFFF" />
 					</view>
 					<!-- content -->
 					<view class="flex-grow text-base" style="margin-left: 24rpx">
 						<view class="flex items-center" style="margin-bottom: 16rpx">
-							<view>{{ item.name }} <text style="letter-spacing: -0.05em">{{ item.tel }}</text></view>
+							<view class="text-md line-1">{{ item.name }} <text style="letter-spacing: -0.05em">{{ item.tel }}</text></view>
 							<view 
 								v-show="item.isDefault" 
 								class="bg-red-400 text-xs text-white rounded-full" 

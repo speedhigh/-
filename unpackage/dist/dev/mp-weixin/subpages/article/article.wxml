@@ -1,0 +1,1 @@
+<view class="text-gray-800" style="padding:130rpx 32rpx 32rpx 32rpx;"><u-navbar vue-id="24b5b626-1" title="{{title}}" autoBack="{{true}}" bind:__l="__l"></u-navbar><u-parse class="text-sm" style="overflow-x:hidden;" vue-id="24b5b626-2" content="{{content}}" bind:__l="__l"></u-parse></view>

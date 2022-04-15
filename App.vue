@@ -86,7 +86,7 @@
 	.bg-gray-600 { background-color: #666666 }
 	.bg-gray-700 { background-color: #4a5568 }
 	.bg-red-300 { background-color: #FCA5A5 }
-	.bg-red-400 { background-color: #F03E38 }
+	.bg-red-400 { background-color: #DF453D }
 	.bg-origin-400 { background-color: #E94D4C }
 	.overflow-x-scroll { overflow-x: scroll }
 	.overflow-y-scroll { overflow-y: scroll }

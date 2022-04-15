@@ -36,28 +36,33 @@
 				</view>
 			</view>
 			<!-- 评价 -->
-			<view v-show="commentList.length > 0" class="bg-white rounded-2xl mt-3d5 p-4">
+			<view class="bg-white rounded-2xl mt-3d5 p-4">
 				<view class="flex items-center">
 					<view class="bg-red-400 rounded-lg" style="width: 6rpx; height: 32rpx; margin-right: 13rpx;" />
 					<view class="text-base font-bold">评价<text class="text-xs text-gray-600 font-normal" style="margin-left: 12rpx">({{ cmtTotal }}条)</text></view>
-					<view class="ml-auto">
+					<view v-if="cmtTotal > 2" class="ml-auto">
 						<u-icon label="查看更多" labelPos="left" labelSize="28rpx" size="28rpx" name="arrow-right"></u-icon>
 					</view>
 				</view>
-				<view v-for="(item, index) in commentList" :key="index">
-					<view class="flex items-center" style="margin-top: 32rpx">
-						<u-avatar src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="68rpx" />
-						<view style="margin-left: 13rpx">
-							<view>{{ item.userName }}</view>
-							<view class="flex items-center">
-								<view class="text-gray-600 text-xs" style="margin-right: 12rpx">{{ item.time }}</view>
-								<u-rate :count="5" v-model="item.irank" size="12" gutter="0" />
+				<view v-if="cmtTotal > 0">
+					<view v-for="(item, index) in commentList" :key="index">
+						<view class="flex items-center" style="margin-top: 32rpx">
+							<u-avatar src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" size="68rpx" />
+							<view style="margin-left: 13rpx">
+								<view>{{ item.userName }}</view>
+								<view class="flex items-center">
+									<view class="text-gray-600 text-xs" style="margin-right: 12rpx">{{ item.time }}</view>
+									<u-rate :count="5" v-model="item.irank" size="12" gutter="0" />
+								</view>
 							</view>
 						</view>
+						<view class="line-2" style="margin-top: 25rpx; height: 66rpx">
+							{{ item.smemo ? item.smemo : '默认好评' }}
+						</view>
 					</view>
-					<view class="line-2" style="margin-top: 25rpx; height: 66rpx">
-						{{ item.smemo }}
-					</view>
+				</view>
+				<view v-else style="margin-top: 32rpx;">
+					当前商品暂无评价
 				</view>
 			</view>
 			<!-- 更多推荐 -->

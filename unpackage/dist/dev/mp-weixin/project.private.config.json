@@ -77,6 +77,24 @@
                     "pathName": "subpages/address/address",
                     "query": "",
                     "scene": null
+                },
+                {
+                    "name": "user",
+                    "pathName": "pages/user/user",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "购物指南",
+                    "pathName": "subpages/guide/guide",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "账户设置",
+                    "pathName": "subpages/set/set",
+                    "query": "",
+                    "scene": null
                 }
             ]
         }

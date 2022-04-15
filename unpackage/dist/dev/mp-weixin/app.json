@@ -18,7 +18,11 @@
         "info/info",
         "coupon/coupon",
         "address/address",
-        "address/edit"
+        "address/edit",
+        "guide/guide",
+        "logistics/logistics",
+        "set/set",
+        "article/article"
       ]
     }
   ],

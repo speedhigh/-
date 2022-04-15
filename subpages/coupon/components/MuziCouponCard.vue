@@ -23,6 +23,7 @@
 			<view 
 				class="flex items-center"
 				style="height: 190rpx; padding: 28rpx 0; border-bottom: dashed 2rpx #E6E6E6"
+				@click="selected(index)"
 			>
 				<!-- 价格 -->
 				<view
@@ -42,7 +43,7 @@
 					<view class="text-xs" style="margin-top: 20rpx">{{ item.startAtstr }} - {{ item.endAtstr }}</view>
 				</view>
 				<!-- 选择器 -->
-				<view v-if="showCheck" class="ml-auto flex-shrink-0 p-4" @click="selected(index)">
+				<view v-if="showCheck" class="ml-auto flex-shrink-0 p-4">
 					<view v-if="!item.selected" class="rounded-full" style="width: 40rpx; height: 40rpx; border: solid 2rpx #999999" />
 					<u-icon v-else name="checkmark-circle-fill" color="#F03E38" size="44rpx" />
 				</view>

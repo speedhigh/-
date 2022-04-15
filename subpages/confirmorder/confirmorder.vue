@@ -1,16 +1,17 @@
 <template>
-	<view class="relative bg-gray-100 text-sm text-gray-800 min-h-screen" style="padding-bottom: 128rpx">
+	<view class="relative bg-gray-100 text-sm text-gray-800 min-h-screen" style="padding: 120rpx 0">
+		<u-navbar title="确认订单" @leftClick="showBackModal" />
 		<!-- 1，地址 -->
+		<u-loading-page v-if="loadingNum < 2" :loading="true" loadingText="正在加载..."  style="z-index: 999"/>
 		<navigator 
 			:url="'/subpages/address/address?from=' + pageFrom"
-			open-type="redirect"
 			class="bg-white rounded-b-2xl flex items-center p-4"
 		>
 			<view class="flex-grow" style="margin-right: 16rpx">
 				<view class="flex items-center" style="margin-bottom: 16rpx">
-					<view style="margin-right: 16rpx">{{ address.slinkman }} {{ address.smobile }}</view>
-					<view 
-						v-show="address.itype === 2" 
+					<view class="text-md" style="margin-right: 16rpx">{{ address.slinkman }} {{ address.smobile }}</view>
+					<view
+						v-show="address.itype === 2"
 						class="bg-red-400 text-xs text-white rounded-full" style="padding: 0 8rpx"
 					>
 						默认
@@ -111,19 +112,15 @@
 		<!-- submit-bar -->
 		<view 
 			class="fixed bottom-0 inset-x-0 bg-white u-border-top" 
-			style="height: 100rpx; padding: 0 32rpx"
+			style="height: 100rpx; padding: 0 32rpx; z-index: 999"
 		>
 			<view class="flex items-center justify-end" style="height: 100%">
 				<view>合计：</view>
 				<view class="text-red-400" style="margin-top: -6rpx">
 					<text>HK$</text>
-					<text class="text-lg">148</text>
+					<text class="text-lg">{{ totalPrice }}</text>
 				</view>
-				<button
-					class="text-white text-sm rounded-full buy-btn"
-				>
-					去结算
-				</button>
+				<button class="text-white text-sm rounded-full buy-btn" :disabled="disabled.buy" @click="buy">去结算</button>
 			</view>
 		</view>
 	</view>
@@ -148,15 +145,27 @@
 			},
 			// 税费
 			tax() {
-				return Math.ceil(this.price * 0.5) / 10 
+				return Math.ceil(this.price * 0.5) / 10
+			},
+			totalPrice() {
+				let total = this.price + this.freight + this.tax - this.orderList.usingquan.quanvalue
+				if(total > 0) {
+					if(this.orderList.carts.length > 0) this.disabled.buy = false
+					return total.toFixed(2)
+				} else {
+					this.disabled.buy = true
+					return 0
+				}
 			}
 		},
 		data() {
 			return {
+				loadingNum: 0,
 				rate: uni.getStorageSync('rate'),
 				pageFrom: '',
 				disabled: {
-					stepper: false
+					stepper: false,
+					buy: true
 				},
 				address: {
 					id: 0,
@@ -169,7 +178,8 @@
 					smobile: ""
 				},
 				orderList: {
-					carts: []
+					carts: [],
+					usingquan: {}
 				},
 				coupon: {
 					text: '',
@@ -191,16 +201,44 @@
 			if(this.pageFrom === 'cart')	this.getOrderList('/pay/confirmorder', {userid: uni.getStorageSync('user').id, cartids: uni.getStorageSync('orderList')})
 		},
 		methods: {
+			showBackModal() {
+				let that = this
+				uni.showModal({
+					content: '确认要放弃购买吗？', 
+					cancelText: '暂时放弃', 
+					confirmText:'继续支付', 
+					confirmColor: '#F03E38', 
+					cancelColor: '#CCCCCC',
+					success(e) {
+						if(e.cancel) {
+							that.back()
+						}
+					}
+				})
+			},
+			async back() {
+				// 清除购物券的后端存储
+				await this.$api({ url: '/quan/clearquanstorage', data: {userid: uni.getStorageSync('user').id}})
+				// 如果是从详情页面来的，要清空数量存储数据
+				if(this.pageFrom === 'detail') {
+					await this.$api({ url: '/pay/clearstorage', data: {userid: uni.getStorageSync('user').id, pid: uni.getStorageSync('productId')}})
+				}
+				uni.navigateBack({
+					delta: getCurrentPages().filter(item => item.route === "subpages/confirmorder/confirmorder").length
+				})
+			},
 			async getAddress(url, data) {
 				const res = await this.$api({ url: url, data: data })
 				Object.assign(this.address, res.data.data)
 				if(!uni.getStorageSync('addressId')) uni.setStorageSync('addressId', res.data.data.id)
+				this.loadingNum += 1
 			},
 			async getOrderList(url, data) {
 				const res = await this.$api({ url: url, data: data })
 				Object.assign(this.orderList, res.data.data)
 				if(res.data.data.usingquan.id) this.coupon.text = res.data.data.usingquan.quanname
 				if(!res.data.data.usingquan.id) this.getCouponNum()
+				this.loadingNum += 1
 			},
 			async getCouponNum() {
 				const res = await this.$api({url: '/quan/getcount_Canuse', data: {userid: uni.getStorageSync('user').id}})
@@ -232,7 +270,10 @@
 				this.checkedProxy = (n[0] === '同意')
 			},
 			showProxy() {
-				uni.showModal({ title:'进口个人申报委托', showCancel: false, confirmColor: '#F03E38', content: '本人承诺所购买商品系个人合理自用，不会进行二次销售，针对境外（包括保税区等特殊监管区域）发货的各种商品，现委托商家或其委托的物流商代理申报、代缴税款等通关事宜，本人保证遵守《海关法》和国家相关法律法规，保证所提供的收件人身份信息和收货信息真实完整，无侵犯他人权益的行为，并督促保证代缴义务人足额支付应缴税款。以上委托关系系如实填写，本人愿意接受海关及其他监管部门的监管，并承担相应法律责任。' })
+				uni.showModal({title:'进口个人申报委托', showCancel: false, confirmColor: '#F03E38', content: '本人承诺所购买商品系个人合理自用，不会进行二次销售，针对境外（包括保税区等特殊监管区域）发货的各种商品，现委托商家或其委托的物流商代理申报、代缴税款等通关事宜，本人保证遵守《海关法》和国家相关法律法规，保证所提供的收件人身份信息和收货信息真实完整，无侵犯他人权益的行为，并督促保证代缴义务人足额支付应缴税款。以上委托关系系如实填写，本人愿意接受海关及其他监管部门的监管，并承担相应法律责任。'})
+			},
+			buy() {
+				
 			}
 		}
 	}

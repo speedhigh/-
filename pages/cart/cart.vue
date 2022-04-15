@@ -181,10 +181,13 @@
 			}
 		},
 		onLoad() {
-			if(!uni.getStorageSync('token')) this.showEmpty = true
+			if(!uni.getStorageSync('token')) {
+				this.showLoading = false
+				this.showEmpty = true
+			} 
 		},
 		onShow() {
-			this.getList()
+			if(uni.getStorageSync('token')) this.getList()
 		},
 		watch: {
 			cartList: {
@@ -212,7 +215,7 @@
 		methods: {
 			// 获取列表
 			async getList() {
-				const res = await this.$api({url: '/cart/getList', data: { userid: uni.getStorageSync('user').id }})
+				const res = await this.$api({url: '/wxapp/cart/getList', data: { userid: uni.getStorageSync('user').id }})
 				this.showLoading = false
 				this.showEmpty = res.data.data.length === 0
 				this.showTop = !(res.data.data.length === 0)

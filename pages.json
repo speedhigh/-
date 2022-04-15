@@ -87,7 +87,6 @@
 				"navigationBarTitleText": "药品详情",
 				"enablePullDownRefresh": false
 			}
-
 		}, {
 			"path": "pages/login/login",
 			"style": {
@@ -100,8 +99,8 @@
 		"pages": [{
 			"path": "confirmorder/confirmorder",
 			"style": {
-				"navigationBarTitleText": "确认订单",
-				"enablePullDownRefresh": false
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
 			}
 		}, {
 			"path": "info/info",
@@ -121,11 +120,38 @@
 				"navigationBarTitleText": "收货地址",
 				"enablePullDownRefresh": false
 			}
-		},{
+		}, {
 			"path": "address/edit",
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "guide/guide",
+			"style": {
+				"navigationBarTitleText": "购物指南",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "logistics/logistics",
+			"style": {
+				"navigationBarTitleText": "物流配送",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "set/set",
+			"style": {
+				"navigationBarTitleText": "账户设置",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "article/article",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
 			}
 		}]
 	}]

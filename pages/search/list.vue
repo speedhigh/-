@@ -1,18 +1,18 @@
 <template>
-	<view 
+	<view
 		class="relative text-sm text-gray-800 bg-gray-100 min-h-screen h-full" 
-		style="padding-top: 114rpx; height: 100%;"
+		style="padding-top: 114rpx; height: 100%"
 	>
-		<view 
+		<view
 			class="fixed top-0 inset-x-0 bg-white"
 			style="padding: 20rpx 16rpx; z-index: 9999"
 		>
 			<navigator url="/pages/search/search">
-				<u-search 
-					:placeholder="params.searchContent ? params.searchContent : '搜索药品名、品牌'" 
-					disabled 
-					:showAction="false" 
-					height="74rpx" 
+				<u-search
+					:placeholder="params.searchContent ? params.searchContent : '搜索药品名、品牌'"
+					disabled
+					:showAction="false"
+					height="74rpx"
 				/>
 			</navigator>
 		</view>
