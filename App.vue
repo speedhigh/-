@@ -98,8 +98,10 @@
 	.bottom-0 { bottom: 0 }
 	.inset-x-0 { left: 0; right: 0 }
 	.fixed { position: fixed }
+	.rounded-sm { border-radius: 8rpx }
 	.rounded-t-md { border-top-left-radius: 12rpx; border-top-right-radius: 12rpx }
 	.rounded-md { border-radius: 12rpx }
+	.rounded-b-md { border-bottom-left-radius: 12rpx; border-bottom-right-radius: 12rpx }
 	.rounded-lg { border-radius: 16rpx }
 	.rounded-xl { border-radius: 24rpx }
 	.rounded-t-xl { border-top-left-radius: 24rpx; border-top-right-radius: 24rpx }
@@ -116,7 +118,7 @@
 	.mt-3d5 { margin-top: 28rpx }
 	.p-4 { padding: 32rpx }
 	.line-1 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: break-all }
-	.line-2 { 
+	.line-2 {
 		text-overflow: -o-ellipsis-lastline; 
 		overflow: hidden; 
 		text-overflow: ellipsis;  

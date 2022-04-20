@@ -95,6 +95,18 @@
                     "pathName": "subpages/set/set",
                     "query": "",
                     "scene": null
+                },
+                {
+                    "name": "order",
+                    "pathName": "subpages/order/order",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "order/detail",
+                    "pathName": "subpages/order/detail",
+                    "query": "id=2211",
+                    "scene": null
                 }
             ]
         }

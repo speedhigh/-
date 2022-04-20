@@ -1,7 +1,7 @@
 // http://52.193.133.155:8888/muzimed_mobile			测试服务器
- // http://192.168.50.62:8888/muzimed_mobile			jsy服务器
- // const BASE_URL = 'http://f513z54511.51vip.biz/muzimed_mobile'
- const BASE_URL = 'http://192.168.50.62:8888/muzimed_mobile'
+// http://192.168.50.62:8888/muzimed_mobile			jsy服务器
+// const BASE_URL = 'http://52.193.133.155:8888/muzimed_mobile'
+const BASE_URL = 'http://192.168.50.62:8888/muzimed_mobile'
 
  export const api = (options) => {
  	const header_tmp = {

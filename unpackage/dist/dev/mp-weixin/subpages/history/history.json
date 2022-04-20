@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的足迹",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-loading-page": "/uni_modules/uview-ui/components/u-loading-page/u-loading-page",
+    "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",
+    "muzi-card": "/components/MuziCard"
+  }
+}

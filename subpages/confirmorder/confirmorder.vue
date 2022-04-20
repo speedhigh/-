@@ -82,7 +82,7 @@
 			<view class="flex mt-3d5">
 				<view>优惠券</view>
 				<view v-if="coupon.text === '暂无可用优惠券'" class="text-gray-400">暂无可用优惠券</view>
-				<navigator url="/subpages/coupon/coupon" v-else class="ml-auto">
+				<navigator url="/subpages/coupon/coupon?type=edit" v-else class="ml-auto">
 					<text>{{ coupon.text }}</text>
 					<text style="margin-left: 4rpx">></text>
 				</navigator>
@@ -182,6 +182,7 @@
 					usingquan: {}
 				},
 				coupon: {
+					id: null,
 					text: '',
 					list: [],
 					noList: []
@@ -194,8 +195,8 @@
 		},
 		onShow() {
 			// 一， 获取地址信息（两种情况，显示默认地址 或 地址列表选择的地址）
-			if(uni.getStorageSync('addressId')) this.getAddress('/useraddress/get', {addressid: uni.getStorageSync('addressId')})
-			if(!uni.getStorageSync('addressId')) this.getAddress('/useraddress/getdefault', {userid: uni.getStorageSync('user').id})
+			if(uni.getStorageSync('addressId')) this.getAddress('/wxapp/useraddress/get', {addressid: uni.getStorageSync('addressId')})
+			if(!uni.getStorageSync('addressId')) this.getAddress('/wxapp/useraddress/getdefault', {userid: uni.getStorageSync('user').id})
 			// 二， 获取商品列表（两种情况，详情页进入的 或 购物车进入的）
 			if(this.pageFrom === 'detail') this.getOrderList('/pay/buynow', { userid: uni.getStorageSync('user').id, pid: uni.getStorageSync('productId')})
 			if(this.pageFrom === 'cart')	this.getOrderList('/pay/confirmorder', {userid: uni.getStorageSync('user').id, cartids: uni.getStorageSync('orderList')})
@@ -236,8 +237,14 @@
 			async getOrderList(url, data) {
 				const res = await this.$api({ url: url, data: data })
 				Object.assign(this.orderList, res.data.data)
-				if(res.data.data.usingquan.id) this.coupon.text = res.data.data.usingquan.quanname
-				if(!res.data.data.usingquan.id) this.getCouponNum()
+				if(res.data.data.usingquan.id) {
+					this.coupon.text = res.data.data.usingquan.quanname
+					this.coupon.id = res.data.data.usingquan.id
+				}
+				if(!res.data.data.usingquan.id) {
+					this.getCouponNum()
+					this.coupon.id = null
+				}
 				this.loadingNum += 1
 			},
 			async getCouponNum() {
@@ -273,7 +280,34 @@
 				uni.showModal({title:'进口个人申报委托', showCancel: false, confirmColor: '#F03E38', content: '本人承诺所购买商品系个人合理自用，不会进行二次销售，针对境外（包括保税区等特殊监管区域）发货的各种商品，现委托商家或其委托的物流商代理申报、代缴税款等通关事宜，本人保证遵守《海关法》和国家相关法律法规，保证所提供的收件人身份信息和收货信息真实完整，无侵犯他人权益的行为，并督促保证代缴义务人足额支付应缴税款。以上委托关系系如实填写，本人愿意接受海关及其他监管部门的监管，并承担相应法律责任。'})
 			},
 			buy() {
-				
+				if(!this.checkedProxy) {
+					uni.showModal({ title: '请选择同意进口个人申报委托', showCancel: false, confirmColor: '#F03E38' })
+					return
+				}
+				this.disabled.buy = true
+				let data = {
+					userid: uni.getStorageSync('user').id,
+					addressinfo: uni.getStorageSync('addressId'),
+					quaninfo: this.coupon.id,
+					jifenused: 0,
+					tprice: this.totalPrice,
+				}
+				if(this.pageFrom === 'detail') {
+					data.amount = this.orderList.carts[0].productMain[0].icount
+					data.cartinfo = this.orderList.cartinfo
+				}
+				if(this.pageFrom === 'cart') {
+					data.cartinfo = this.orderList.cartinfo + ','
+				}
+				this.$api({
+					method: 'POST',
+					contentType: 'application/x-www-form-urlencoded',
+					url: '/pay/submitorder',
+					data: data
+				}).then((res) => {
+					console.log(res)
+				})
+				this.disabled.buy = false
 			}
 		}
 	}

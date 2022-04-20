@@ -11,10 +11,11 @@
 				height="460rpx"
 				text="购物车还是空的"
 				icon="http://cdn.uviewui.com/uview/empty/car.png"
-			/>
-			<navigator url="/pages/index/index" open-type="switchTab" class="mx-auto" style="width: 300rpx; margin-top: 50rpx">
-				<u-button type="primary" shape="circle" text="逛逛首页" color="linear-gradient(to right, #ff5d32, #f00f23)" />
-			</navigator>
+			>
+				<navigator url="/pages/index/index" open-type="switchTab" class="mx-auto" style="width: 300rpx; margin-top: 50rpx">
+					<u-button type="primary" shape="circle" text="逛逛首页" color="linear-gradient(to right, #ff5d32, #f00f23)" />
+				</navigator>
+			</u-empty>
 		</view>
 		<!-- 加载 Loading -->
 		<view v-show="showLoading" class="absolute inset-x-0" style="padding: 16rpx; top: 120rpx" >
@@ -187,7 +188,10 @@
 			} 
 		},
 		onShow() {
-			if(uni.getStorageSync('token')) this.getList()
+			if(uni.getStorageSync('token')) {
+				this.getList()
+				this.clearstorage() // 清空地址id存储、购物券存储
+			}
 		},
 		watch: {
 			cartList: {
@@ -213,6 +217,11 @@
 			}
 		},
 		methods: {
+			// 清空地址id存储、购物券存储
+			async clearstorage() {
+				if(uni.getStorageSync('addressId')) uni.removeStorage({ key: 'addressId'})
+				await this.$api({ url: '/quan/clearquanstorage', data: {userid: uni.getStorageSync('user').id}})
+			},
 			// 获取列表
 			async getList() {
 				const res = await this.$api({url: '/wxapp/cart/getList', data: { userid: uni.getStorageSync('user').id }})

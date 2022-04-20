@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "order-base-pagination-default": "/subpages/order/order-base-pagination-default",
+    "u-navbar": "/uni_modules/uview-ui/components/u-navbar/u-navbar",
+    "u-tabs": "/uni_modules/uview-ui/components/u-tabs/u-tabs",
+    "base-pagination": "/components/BasePagination",
+    "order-card": "/subpages/order/components/OrderCard"
+  }
+}

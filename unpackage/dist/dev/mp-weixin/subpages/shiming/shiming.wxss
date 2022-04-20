@@ -1,0 +1,8 @@
+
+.btn-confirm.data-v-451e1506 {
+	margin-top: 48rpx;
+	color: #FFFFFF;
+	width: 400rpx;
+	background: linear-gradient(to right, #ff5d32, #f00f23)
+}
+

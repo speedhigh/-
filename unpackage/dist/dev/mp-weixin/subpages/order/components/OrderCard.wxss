@@ -1,0 +1,16 @@
+
+.btn-red.data-v-05615eda {
+	line-height: 48rpx; 
+	padding: 0 24rpx; 
+	margin-left: 16rpx; 
+	margin-top: 32rpx; 
+	border: solid #F03E38 2rpx; color: #F03E38
+}
+.btn-gray.data-v-05615eda {
+	line-height: 48rpx; 
+	padding: 0 24rpx; 
+	margin-left: 16rpx; 
+	margin-top: 32rpx; 
+	color: #999999; border: solid #999999 2rpx
+}
+

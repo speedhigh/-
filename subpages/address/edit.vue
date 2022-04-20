@@ -12,7 +12,7 @@
 				<u-form-item label="身份证号" prop="cardno" labelWidth="170rpx" borderBottom>
 					<u--input v-model="form.cardno" maxlength="18" border="none" placeholder="请填写身份证号" />
 				</u-form-item>
-				<u-form-item label="所在地区" prop="addressArea" labelWidth="170rpx" borderBottom @click="areaShow">
+				<u-form-item label="所在地区" prop="addressArea" labelWidth="170rpx" borderBottom @click="area.show = true">
 					<u--input v-model="form.addressArea" disabled disabledColor="#ffffff" placeholder="请选择所在地区" border="none" />
 					<u-icon slot="right" name="arrow-right" />
 				</u-form-item>
@@ -65,7 +65,6 @@
 			return {
 				showLoading: true,
 				itype: 2,  // 如果是编辑状态 且 编辑的地址不是默认地址，显示删除按钮
-				pageFrom: '',	
 				operation: '',
 				addressId: '',
 				// 地区相关
@@ -105,8 +104,6 @@
 			}
 		},
 		onLoad(option) {
-			console.log(option)
-			this.pageFrom = option.from
 			this.operation = option.operation
 			this.addressId = option.addressId
 			this.getArea()
@@ -120,8 +117,9 @@
 			this.$refs.formRef.setRules(this.rules)
 		},
 		methods: {
+			// 编辑状态，获取信息并将地址信息传入form
 			async getAddressDetail(id) {
-				const res = await this.$api({url: '/useraddress/get', data: { addressid: id }})
+				const res = await this.$api({url: '/wxapp/useraddress/get', data: { addressid: id }})
 				this.itype = res.data.data.itype
 				this.form.name = res.data.data.slinkman
 				this.form.mobile = res.data.data.smobile
@@ -129,6 +127,7 @@
 				this.form.addressArea = res.data.data.saddressname
 				this.form.addressDetail = res.data.data.sdetail
 			},
+			// 获取省市列表
 			async getArea() {
 				const res = await this.$api({ url: '/open/common/get_address_select' })
 				res.data.data.forEach((item, index) => {
@@ -143,16 +142,12 @@
 				})
 				this.showLoading = false
 			},
-			areaShow() {
-				this.area.show = true
-			},
+			// 点击省自动切市
 			changeHandler(e) {
-				console.log(e)
 				const { columnIndex, value, values, index, picker = this.$refs.pickerRef } = e
-				if (columnIndex === 0) {
-					picker.setColumnValues(1, this.area.city[index])
-				}
+				if (columnIndex === 0) picker.setColumnValues(1, this.area.city[index])
 			},
+			// 确认省市
 			confirm(e) {
 				let p = this.area.province[0]
 				let c = this.area.province[0][e.indexs[0]].children
@@ -162,29 +157,31 @@
 				this.$refs.formRef.validateField('addressArea')
 				this.area.show = false
 			},
+			// 删除地址
 			remove() {
 				uni.showModal({ content:'确定要将该地址删除吗', success: () => {
-					const res = this.$api({url: '/useraddress/delete', method: 'DELETE', contentType: 'application/x-www-form-urlencoded', data: { addressid: this.addressId }})
+					const res = this.$api({url: '/wxapp/useraddress/delete', method: 'DELETE', contentType: 'application/x-www-form-urlencoded', data: { addressid: this.addressId }})
 					if(res.data.code === 20000 && uni.getStorageSync('addressId') === this.addressId) uni.removeStorageSync('addressId')
 					uni.navigateBack()
 				}})
 			},
+			// 保存
 			onSave() {
-				let data = {
-					itype: this.itype === 2 ? 2 : this.switchValue ? 2 : 1,
-					iuserid: uni.getStorageSync('user').id,
-					cityscode: this.area.cityscode,
-					provincescode: this.area.provincescode,
-					scardno: this.form.cardno,
-					sdetail: this.form.addressDetail,
-					slinkman: this.form.name,
-					smobile: this.form.mobile,
-				}
+				// 校验
 				this.$refs.formRef.validate().then(res => {
-					console.log(res)
+					let data = {
+						itype: this.itype === 2 ? 2 : this.switchValue ? 2 : 1,
+						iuserid: uni.getStorageSync('user').id,
+						cityscode: this.area.cityscode,
+						provincescode: this.area.provincescode,
+						scardno: this.form.cardno,
+						sdetail: this.form.addressDetail,
+						slinkman: this.form.name,
+						smobile: this.form.mobile,
+					}
 					// 创建新地址
 					if(this.operation === 'creat') {
-						const res = this.$api({url: '/useraddress/post', method: 'POST', data: pickBy(data)})
+						const res = this.$api({url: '/wxapp/useraddress/post', method: 'POST', data: pickBy(data)})
 						uni.showModal({ content: '新增地址成功！', showCancel: false, success:() => {
 							uni.navigateBack()
 						}})
@@ -193,7 +190,7 @@
 					if(this.operation === 'edit') {
 						data.id = this.addressId
 						// const res = this.$api({url: '/useraddress/put', method: 'POST', data: pickBy(data)})
-						this.$api({url: '/useraddress/put', method: 'POST', data: pickBy(data)}).then((res) => {
+						this.$api({url: '/wxapp/useraddress/put', method: 'POST', data: pickBy(data)}).then((res) => {
 							if(res.data.code === 20000) {
 								uni.showModal({ content: '修改地址成功！', showCancel: false, success:() => {
 									uni.navigateBack()

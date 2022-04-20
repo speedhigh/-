@@ -22,6 +22,7 @@
 				>
 					<!-- checked -->
 					<view
+						v-if="showSel"
 						class="rounded-full flex-shrink-0 flex items-center justify-center"
 						:class="item.id === chosenId ? 'bg-red-400' : 'bg-white u-border'"
 						style="width: 34rpx; height: 34rpx"
@@ -67,6 +68,7 @@
 		data() {
 			return {
 				pageFrom: '',
+				showSel: true,
 				chosenId: uni.getStorageSync('addressId'),
 				showLoading: true,
 				showEmpty: false,
@@ -74,31 +76,35 @@
 			}
 		},
 		onLoad(option) {
+			console.log(option)
 			this.pageFrom = option.from
+			this.showSel = option.from !== 'set'
 		},
 		onShow() {
 			this.getAddressList()
 		},
 		methods: {
 			async getAddressList() {
-				const res = await this.$api({url: '/useraddress/getList', data: {userid: uni.getStorageSync('user').id}})
+				const res = await this.$api({url: '/wxapp/useraddress/getList', data: {userid: uni.getStorageSync('user').id}})
 				this.list = res.data.data
 				this.showLoading = false
 				if(res.data.data.length === 0) this.showEmpty = true
 			},
 			// 选择地址
 			selectedAddress(id) {
-				this.chosenId = id
-				uni.setStorageSync('addressId', id)
-				uni.redirectTo({ url: '/subpages/confirmorder/confirmorder?from=' + this.pageFrom })
+				if(this.showSel) {
+					this.chosenId = id
+					uni.setStorageSync('addressId', id)
+					uni.redirectTo({ url: '/subpages/confirmorder/confirmorder?from=' + this.pageFrom })
+				}
 			},
 			// 新增地址
 			addAddress() {
-				uni.navigateTo({ url: '/subpages/address/edit?from=' + this.pageFrom + '&operation=creat' })
+				uni.navigateTo({ url: '/subpages/address/edit?operation=creat' })
 			},
 			// 编辑地址
 			editAddress(id) {
-				uni.navigateTo({ url: '/subpages/address/edit?from=' + this.pageFrom + '&operation=edit&addressId=' + id })
+				uni.navigateTo({ url: '/subpages/address/edit?operation=edit&addressId=' + id })
 			}
 		}
 	}

@@ -14,14 +14,10 @@
 					</navigator>
 				</view>
 				<view class="flex justify-around" style="padding: 18rpx 26rpx 8rpx 26rpx">
-					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF"
-						label="正品承诺" />
-					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF"
-						label="低价保障" />
-					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF"
-						label="会员包邮" />
-					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF"
-						label="海外直邮" />
+					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF" label="正品承诺" />
+					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF" label="低价保障" />
+					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF" label="会员包邮" />
+					<u-icon size="36rpx" labelSize="24rpx" name="integral" color="#FFFFFF" labelColor="#FFFFFF" label="海外直邮" />
 				</view>
 				<!-- 轮播图 -->
 				<view style="padding: 0 20rpx; height: 270rpx; margin-top: 16rpx">
@@ -31,7 +27,7 @@
 				<view style="height: 396rpx; padding: 12rpx 15rpx">
 					<u-grid :border="false" col="5">
 						<u-grid-item v-for="(item, index) in kingkong" :key="index">
-							<navigator :url="'/pages/search/list?id=' + item.scode" style="padding: 20rpx 0">
+							<navigator :url="'/pages/search/list?id=' + item.scode + '&title=' + item.sname" style="padding: 20rpx 0">
 								<u--image :src="item.image" width="98rpx" height="98rpx" shape="circle" />
 								<view class="text-sm" style="margin-top: 10rpx">{{ item.sname }}</view>
 							</navigator>
@@ -39,7 +35,7 @@
 					</u-grid>
 				</view>
 				<!-- family 家庭常备药 -->
-				<navigator url="/pages/search/list?id=01" height="190rpx">
+				<navigator url="/pages/search/list?id=01&title=家庭常备" height="190rpx">
 					<u--image src="/static/images/home/banner-family.png" width="750rpx" height="190rpx" />
 				</navigator>
 				<!-- recommend 热销推荐区 -->

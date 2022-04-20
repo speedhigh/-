@@ -38,11 +38,14 @@
 			<!-- 评价 -->
 			<view class="bg-white rounded-2xl mt-3d5 p-4">
 				<view class="flex items-center">
-					<view class="bg-red-400 rounded-lg" style="width: 6rpx; height: 32rpx; margin-right: 13rpx;" />
+					<view 
+						class="bg-red-400 rounded-lg" 
+						style="width: 6rpx; height: 32rpx; margin-right: 13rpx" 
+					/>
 					<view class="text-base font-bold">评价<text class="text-xs text-gray-600 font-normal" style="margin-left: 12rpx">({{ cmtTotal }}条)</text></view>
-					<view v-if="cmtTotal > 2" class="ml-auto">
+					<navigator :url="'/pages/detail/comment?id=' + productId" v-if="cmtTotal > 2" class="ml-auto">
 						<u-icon label="查看更多" labelPos="left" labelSize="28rpx" size="28rpx" name="arrow-right"></u-icon>
-					</view>
+					</navigator>
 				</view>
 				<view v-if="cmtTotal > 0">
 					<view v-for="(item, index) in commentList" :key="index">
@@ -106,19 +109,20 @@
 			</view>
 			<!-- action-bar -->
 			<view
-				class="fixed bottom-0 inset-x-0 w-full bg-white u-border-top flex items-center" 
+				class="fixed bottom-0 inset-x-0 w-full bg-white u-border-top flex items-center"
 				style="height: 100rpx; z-index: 9999; padding: 0 16rpx"
 			>
-				<navigator url="/pages/cart/cart" open-type="switchTab" class="flex-shrink-0" style="padding: 0 14rpx">
-					<u-icon label="购物车" labelPos="bottom" labelSize="24rpx" size="52rpx" name="shopping-cart" />
+				<navigator url="/pages/cart/cart" open-type="switchTab" class="flex-shrink-0" style="width: 80rpx; height: 84rpx">
+					<u-icon label="购物车" labelPos="bottom" labelSize="24rpx" size="48rpx" name="shopping-cart" />
 				</navigator>
-				<view class="flex-shrink-0" style="padding: 0 20rpx">
+				<view class="flex-shrink-0" style="width: 80rpx; height: 84rpx; margin-left: 16rpx">
 					<u-icon label="客服" labelPos="bottom" labelSize="24rpx" size="48rpx" name="kefu-ermai" />
 				</view>
-				<view class="flex-shrink-0" style="padding: 0 20rpx">
-					<u-icon label="收藏" labelPos="bottom" labelSize="24rpx" size="48rpx" name="star" />
+				<view class="flex-shrink-0" style="width: 80rpx; height: 84rpx; margin-left: 16rpx" @click="changeCollect">
+					<u-icon v-if="iscollect" label="已收藏" labelPos="bottom" labelSize="24rpx" size="48rpx" name="star-fill" color="#ff5000" />
+					<u-icon v-else label="收藏" labelPos="bottom" labelSize="24rpx" size="48rpx" name="star" />
 				</view>
-				<view class="flex-grow flex items-center" style="margin-left: 16rpx;">
+				<view class="flex-grow flex items-center" style="margin-left: 20rpx">
 					<view
 						class="rounded-l-full flex items-center justify-center text-white"
 						:class="disabled.cart ? 'cart-btn-disabled' : 'cart-btn'"
@@ -153,7 +157,9 @@
 				moreList: [],
 				scrollLeft: 0,
 				dtlList: [],
+				iscollect: false,
 				disabled: {
+					collect: false,
 					cart: false,
 					buy: true
 				}
@@ -167,7 +173,21 @@
 			this.getMoreList(option.id) // 获取更多推荐
 			this.getDtlList(option.id)  // 获取详情图
 		},
+		onShow() {
+			if(uni.getStorageSync('token')) {
+				this.clearstorage()	// 清空数量存储、地址id存储、购物券存储
+				this.addHistory(this.productId)	// 添加足跡
+			}
+		},
 		methods: {
+			async addHistory(id) {
+				await this.$api({ url: '/wxapp/addBrowseHistory', data: {productid: id} })
+			},
+			async clearstorage() {
+				if(uni.getStorageSync('addressId')) uni.removeStorage({ key: 'addressId'})
+				await this.$api({ url: '/pay/clearstorage', data: {userid: uni.getStorageSync('user').id, pid: uni.getStorageSync('productId')}})
+				await this.$api({ url: '/quan/clearquanstorage', data: {userid: uni.getStorageSync('user').id}})
+			},
 			async getSwipers(id) {
 				const res = await this.$api({ url: '/open/product_detail/get_product_images', data: { id: id } })
 				this.swipers = res.data.data
@@ -178,6 +198,7 @@
 				this.info = res.data.data
 				this.disabled.buy = (res.data.data.icount === 0)
 				if(res.data.data.icount === 0) uni.showToast({ title:'库存为0', icon:'error' })
+				this.iscollect = res.data.data.iscollect
 				this.loadingNum += 1
 			},
 			async getComment(id) {
@@ -197,23 +218,44 @@
 				this.dtlList = res.data.data.images
 				this.loadingNum += 1
 			},
+			// 添加、取消收藏
+			changeCollect() {
+				// 没登录
+				if(!uni.getStorageSync('token')) { this.showLoginModal(); return }
+				// ↓↓↓↓↓
+				let data = { userid: uni.getStorageSync('user').id, productid: this.productId }
+				uni.showLoading({title: '加载中'})
+				if(!this.iscollect && !this.disabled.collect) {
+					this.disabled.collect = true
+					this.$api({method: 'POST', contentType: 'application/x-www-form-urlencoded', url: '/myfavorite/postCollect', data: data}).then((res) => {
+						if(res.data.code === 20000) {
+							setTimeout(() => {
+								uni.showToast({ title:'收藏成功', complete: () => {this.iscollect = true}})
+								this.disabled.collect = false
+							}, 200)
+						}
+					})
+				} 
+				if(this.iscollect && !this.disabled.collect) {
+					this.disabled.collect = true
+					this.$api({method: 'DELETE', contentType: 'application/x-www-form-urlencoded', url: '/myfavorite/deleteCollect', data: data}).then((res) => {
+						if(res.data.code === 20000) {
+							setTimeout(() => {
+								uni.showToast({ title:'取消收藏成功', complete: () => {this.iscollect = false}})
+								this.disabled.collect = false
+							}, 200)
+						}
+					})
+				}
+			},
 			// 加入购物车
 			async addCart() {
 				if(!this.disabled.cart) {
 					// 没登录
-					if(!uni.getStorageSync('token')) {
-						uni.showModal({ title: '您还未登录，请先登录', icon: 'fail', showCancel: false, success: () => {
-							uni.navigateTo({ url: '/pages/login/login' })
-						}})
-						return 
-					}
+					if(!uni.getStorageSync('token')) { this.showLoginModal(); return }
 					// 没实名认证
-					if(uni.getStorageSync('shiming') === '0') {
-						uni.showModal({ title: '您还未实名认证，请先完善信息喲', icon: 'fail', showCancel: false, success: () => {
-							uni.navigateTo({ url: '/subpages/info/info' })
-						}})
-						return
-					}
+					if(uni.getStorageSync('shiming') === '0') { this.showShimingModal(); return }
+					// ↓↓↓↓↓
 					this.disabled.cart = true
 					const res = await this.$api({
 						method: 'POST',
@@ -235,21 +277,22 @@
 			},
 			buy() {
 				// 没登录
-				if(!uni.getStorageSync('token')) {
-					uni.showModal({ title: '您还未登录，请先登录', icon: 'fail', showCancel: false, success: () => {
-						uni.navigateTo({ url: '/pages/login/login' })
-					}})
-					return 
-				}
+				if(!uni.getStorageSync('token')) { this.showLoginModal(); return }
 				// 没实名认证
-				if(uni.getStorageSync('shiming') === '0') {
-					uni.showModal({ title: '您还未实名认证，请先完善信息喲', icon: 'fail', showCancel: false, success: () => {
-						uni.navigateTo({ url: '/subpages/info/info' })
-					}})
-					return
-				}
+				if(uni.getStorageSync('shiming') === '0') { this.showShimingModal(); return }
+				// ↓↓↓↓↓
 				uni.setStorageSync('productId', this.productId)
 				if(!this.disabled.buy) uni.navigateTo({ url: '/subpages/confirmorder/confirmorder?from=detail' })
+			},
+			showLoginModal() {
+				uni.showModal({ title: '您还未登录，请先登录', icon: 'fail', showCancel: false, success: () => {
+					uni.navigateTo({ url: '/pages/login/login' })
+				}})
+			},
+			showShimingModal() {
+				uni.showModal({ title: '您还未实名认证，请先完善信息喲', icon: 'fail', showCancel: false, success: () => {
+					uni.navigateTo({ url: '/subpages/info/info' })
+				}})
 			}
 		}
 	}

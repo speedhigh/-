@@ -8,6 +8,7 @@
     "pages/search/search",
     "pages/search/list",
     "pages/detail/detail",
+    "pages/detail/comment",
     "pages/login/login"
   ],
   "subPackages": [
@@ -22,7 +23,13 @@
         "guide/guide",
         "logistics/logistics",
         "set/set",
-        "article/article"
+        "article/article",
+        "collection/collection",
+        "history/history",
+        "order/order",
+        "order/detail",
+        "transport/transport",
+        "shiming/shiming"
       ]
     }
   ],

@@ -82,7 +82,9 @@
 		},
 		methods: {
 			selected(index) {
-				this.$emit('change', index)
+				if(this.showCheck) {
+					this.$emit('change', index)
+				}
 			}
 		}
 	}

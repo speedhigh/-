@@ -13,7 +13,7 @@
 		<view style="padding: 24rpx">
 			<!-- 可用列表 -->
 			<view v-show="active === 0">
-				<muzi-coupon-card ref="couponRef1" :list="coupon.list" show-check @change="changeCoupon" />
+				<muzi-coupon-card ref="couponRef1" :list="coupon.list" :show-check="type === 'edit'" @change="changeCoupon" />
 			</view>
 			<!-- 不可用列表 -->
 			<view v-show="active === 1">
@@ -21,7 +21,7 @@
 			</view>
 		</view>
 		<!-- 不使用优惠券 -->
-		<view v-if="coupon.list.length > 0" class="fixed bottom-0 inset-x-0 bg-white u-border-top" style="padding: 16rpx 32rpx;">
+		<view v-if="coupon.list.length > 0 && type==='edit'" class="fixed bottom-0 inset-x-0 bg-white u-border-top" style="padding: 16rpx 32rpx;">
 			<button class="bg-red-400 text-white rounded-full text-base" @click="cancelCoupon">
 				不使用优惠券
 			</button>
@@ -37,6 +37,7 @@
 		},
 		data() {
 			return {
+				type: 'edit',
 				active: 0,
 				tabs: [{name: '可用列表'},{name: '不可用列表'}],
 				coupon: {
@@ -45,7 +46,9 @@
 				}
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			// type === 'edit'(可编辑) || 'readonly'(只读)
+			this.type = option.type
 			this.getCouponList()
 		},
 		methods: {
@@ -79,7 +82,9 @@
 					c.selected = (index === idx)
 				})
 				await this.$api({url: '/quan/addquanstorage', data: {userid: uni.getStorageSync('user').id, quanid: this.coupon.list[index].id}})
-				uni.navigateBack()
+				uni.showModal({ showCancel: false, content: '选择成功！', confirmColor: '#F03E38', success() {
+					uni.navigateBack()
+				}})
 			},
 			// 不使用优惠券
 			async cancelCoupon() {
@@ -87,7 +92,9 @@
 					c.selected = false
 				})
 				await this.$api({url: '/quan/clearquanstorage', data: {userid: uni.getStorageSync('user').id}})
-				uni.navigateBack()
+				uni.showModal({ showCancel: false, content: '完成！', confirmColor: '#F03E38', success() {
+					uni.navigateBack()
+				}})
 			},
 		}
 	}

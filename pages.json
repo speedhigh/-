@@ -78,13 +78,20 @@
 		}, {
 			"path": "pages/search/list",
 			"style": {
-				"navigationBarTitleText": "",
-				"onReachBottomDistance": 150
+				"onReachBottomDistance": 150,
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
 			}
 		}, {
 			"path": "pages/detail/detail",
 			"style": {
 				"navigationBarTitleText": "药品详情",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/detail/comment",
+			"style": {
+				"navigationBarTitleText": "药品评价",
 				"enablePullDownRefresh": false
 			}
 		}, {
@@ -111,7 +118,7 @@
 		}, {
 			"path": "coupon/coupon",
 			"style": {
-				"navigationBarTitleText": "优惠券",
+				"navigationBarTitleText": "我的优惠券",
 				"enablePullDownRefresh": false
 			}
 		}, {
@@ -153,6 +160,46 @@
 				"navigationStyle": "custom", // 隐藏系统导航栏
 				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
 			}
+		}, {
+			"path": "collection/collection",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "history/history",
+			"style": {
+				"navigationBarTitleText": "我的足迹",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "order/order",
+			"style": {
+				"navigationStyle": "custom", // 隐藏系统导航栏
+				"navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+			}
+		}, {
+			"path": "order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "transport/transport",
+			"style": {
+				"navigationBarTitleText": "物流信息",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "shiming/shiming",
+			"style": {
+				"navigationBarTitleText": "实名认证",
+				"enablePullDownRefresh": false
+			}
+
 		}]
 	}]
 }

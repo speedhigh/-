@@ -1,11 +1,12 @@
 <template>
 	<view
 		class="relative text-sm text-gray-800 bg-gray-100 min-h-screen h-full" 
-		style="padding-top: 114rpx; height: 100%"
+		style="padding-top: 224rpx; height: 100%"
 	>
+		<u-navbar :title="title" autoBack />
 		<view
-			class="fixed top-0 inset-x-0 bg-white"
-			style="padding: 20rpx 16rpx; z-index: 9999"
+			class="fixed inset-x-0 bg-white"
+			style="padding: 20rpx 16rpx; z-index: 9999; top: 110rpx"
 		>
 			<navigator url="/pages/search/search">
 				<u-search
@@ -47,13 +48,14 @@
 
 <script>
 	import { pickBy } from 'lodash'
-	import MuziCard from '../../components/MuziCard.vue'
+	import MuziCard from '@/components/MuziCard.vue'
 	export default {
 		components: {
 			MuziCard
 		},
 		data() {
 			return {
+				title: '',
 				showLoading: true,
 				currentPage: 1,
 				list: [],
@@ -81,6 +83,7 @@
 			},
 		},
 		onLoad(option) {
+			if(option.title) this.title = option.title
 			if(option.drug) this.params.searchContent = option.drug
 			if(option.id) this.params.sclass = option.id
 			if(option.secondClass) this.params.onefunctioncategory = option.secondClass

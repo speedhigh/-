@@ -1,7 +1,9 @@
 {
-  "navigationBarTitleText": "",
   "onReachBottomDistance": 150,
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
   "usingComponents": {
+    "u-navbar": "/uni_modules/uview-ui/components/u-navbar/u-navbar",
     "u-search": "/uni_modules/uview-ui/components/u-search/u-search",
     "u-loading-icon": "/uni_modules/uview-ui/components/u-loading-icon/u-loading-icon",
     "u-empty": "/uni_modules/uview-ui/components/u-empty/u-empty",

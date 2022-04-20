@@ -6,7 +6,15 @@
 				<u--image src="/static/images/login/logo.png" width="176rpx" height="326rpx" />
 			</view>
 			<view style="margin-top: 228rpx">
-				<u-button text="微信用户一键注册" color="#54C56F" shape="circle" size="large" open-type="getPhoneNumber"  @getphonenumber="getPhoneNumber"/>
+				<u-button 
+					text="微信用户一键注册" 
+					color="#54C56F" 
+					shape="circle" 
+					size="large" 
+					open-type="getPhoneNumber"  
+					@getphonenumber="getPhoneNumber" 
+					@click="getInfo"
+				/>
 			</view>
 			<view class="flex items-center justify-center" style="margin-top: 40rpx">
 				<u-checkbox-group @change="checkChange">
@@ -47,6 +55,14 @@
 				uni.setStorageSync('openid', res.data.data.openid)
 				this.showLoading = false
 			},
+			getInfo() {
+				uni.getUserProfile({
+					desc: 'Weixin',
+					success(e) {
+						uni.setStorage({ key: 'info', data: e.userInfo })
+					}
+				})
+			},
 			getCode() {
 				uni.getProvider({
 					service: 'oauth',
@@ -72,7 +88,9 @@
 						uni.showModal({ content: '请同意授权木子网隐私协议', showCancel: false})
 						return
 					}
-					if(uni.getStorageSync('openid')) this.login(e.detail.code, uni.getStorageSync('openid'))
+					if(uni.getStorageSync('openid')) {
+						this.login(e.detail.code, uni.getStorageSync('openid'))
+					}
 				}
 			},
 			
@@ -89,7 +107,7 @@
 			},
 			// 是否已经实名认证
 			async getshiming(userid) {
-				const res = await this.$api({url: '/myidcard/get', data: { userid: userid }})
+				const res = await this.$api({url: '/wxapp/myidcard/get', data: { userid: userid }})
 				console.log(res)
 				if(res.data.code === 20000) {
 					uni.setStorageSync('shiming', 1)

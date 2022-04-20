@@ -467,12 +467,19 @@ button {
 .fixed {
   position: fixed;
 }
+.rounded-sm {
+  border-radius: 8rpx;
+}
 .rounded-t-md {
   border-top-left-radius: 12rpx;
   border-top-right-radius: 12rpx;
 }
 .rounded-md {
   border-radius: 12rpx;
+}
+.rounded-b-md {
+  border-bottom-left-radius: 12rpx;
+  border-bottom-right-radius: 12rpx;
 }
 .rounded-lg {
   border-radius: 16rpx;

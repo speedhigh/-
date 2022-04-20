@@ -60,15 +60,17 @@
 				const newParams = {}
 				if (!more) this.currentPage = 1
 				Object.assign(newParams, this.params, { currentPage: this.currentPage, size: this.size })	
-				const res = await this.$api({ url: '/open/home/search', data: pickBy(newParams)})
+				const res = await this.$api({ url: this.url, data: pickBy(newParams)})
 				if(more) this.localList.push(...res.data.data.records)
 				if(!more) this.localList = res.data.data.records
-				if (res.data.data.current*res.data.data.size >= res.data.data.total)this.finished = true
+				if (res.data.data.current * res.data.data.size >= res.data.data.total)this.finished = true
 				this.showLoading = false
 			},
 			addPage() {
-				this.currentPage++
-				this.askApi()
+				if(!this.finished) {
+					this.currentPage++
+					this.askApi()
+				}
 			}
 		},
 		watch: {
